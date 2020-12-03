@@ -46,29 +46,50 @@ const SearchPresenter = ({
       {loading ? (
         <Loader />
       ) : (
-        movieResults &&
-        movieResults.length > 0 && (
-          <Section title="영화">
-            {movieResults.map((movie) => (
-              <Poster
-                key={movie.id}
-                id={movie.id}
-                title={movie.original_title}
-                imageUrl={movie.poster_path}
-                rating={movie.vote_average}
-                isMovie={true}
-                year={movie.release_date && movie.release_date.substring(0, 4)}
-              />
-            ))}
-          </Section>
-        )
+        <>
+          {movieResults && movieResults.length > 0 && (
+            <Section title="영화">
+              {movieResults.map((movie) => (
+                <Poster
+                  key={movie.id}
+                  id={movie.id}
+                  title={movie.original_title}
+                  imageUrl={movie.poster_path}
+                  rating={movie.vote_average}
+                  isMovie={true}
+                  year={
+                    movie.release_date && movie.release_date.substring(0, 4)
+                  }
+                />
+              ))}
+            </Section>
+          )}
+          {tvResults && tvResults.length > 0 && (
+            <Section title="TV">
+              {tvResults.map((show) => (
+                <Poster
+                  key={show.id}
+                  id={show.id}
+                  title={show.name}
+                  imageUrl={show.poster_path}
+                  rating={show.vote_average}
+                  isMovie={false}
+                  year={
+                    show.first_air_date && show.first_air_date.substring(0, 4)
+                  }
+                />
+              ))}
+            </Section>
+          )}
+          {error && <Message color={"e74c3c"} text={error} />}
+          {tvResults &&
+            movieResults &&
+            tvResults.length === 0 &&
+            movieResults.length === 0 && (
+              <Message text="검색 결과가 없습니다." color={"#95a5a6"} />
+            )}
+        </>
       )}
-      {tvResults &&
-        movieResults &&
-        tvResults.length === 0 &&
-        movieResults.length === 0 && (
-          <Message text="검색결과가 없습니다." color={"#95a5a6"} />
-        )}
     </Container>
   );
 };

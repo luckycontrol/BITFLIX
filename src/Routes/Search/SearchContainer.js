@@ -48,10 +48,10 @@ export default class extends React.Component {
       //unpacking 기법 활용하기
       const {
         data: { results: movieResults },
-      } = await moviesApi.search();
+      } = await moviesApi.search(searchTerm);
       const {
         data: { results: tvResults },
-      } = await tvApi.search();
+      } = await tvApi.search(searchTerm);
 
       this.setState({
         movieResults,
